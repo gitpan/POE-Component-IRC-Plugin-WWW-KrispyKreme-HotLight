@@ -1,0 +1,35 @@
+---
+abstract: "IRC Plugin\nto announce when there are fresh donuts in the area!"
+author:
+  - 'Curtis Brandt <curtis@cpan.org>'
+build_requires:
+  Test::More: 0.88
+configure_requires:
+  Module::Build::Tiny: 0.019
+dynamic_config: 0
+generated_by: 'Dist::Milla version v1.0.2, Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.130880'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight
+no_index:
+  directory:
+    - t
+    - xt
+    - inc
+    - share
+    - eg
+    - examples
+requires:
+  Moose: 0
+  POE::Component::IRC::Plugin: 0
+  WWW::KrispyKreme::Hotlight: 0.01
+  perl: 5.008005
+resources:
+  bugtracker: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight/issues
+  homepage: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight
+  repository: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight.git
+version: 0.01
+x_contributors:
+  - 'Curtis Brandt <curtisjbrandt@gmail.com>'
