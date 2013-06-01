@@ -38,6 +38,7 @@
          "requires" : {
             "Moose" : "0",
             "POE::Component::IRC::Plugin" : "0",
+            "POE::Component::IRC::Plugin::Role" : "0",
             "WWW::KrispyKreme::Hotlight" : "0.01",
             "perl" : "5.008005"
          }
@@ -60,7 +61,7 @@
          "web" : "https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_contributors" : [
       "Curtis Brandt <curtisjbrandt@gmail.com>"
    ]
