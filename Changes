@@ -1,5 +1,8 @@
 Revision history for POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight
 
+0.03  2013-06-07 08:58:03 PDT
+        - Fix dependency typo - HotLight, not Hotlight
+
 0.02  2013-06-01 10:38:53 PDT
         - Add POE::Component::IRC::Plugin::Role as dependency
 

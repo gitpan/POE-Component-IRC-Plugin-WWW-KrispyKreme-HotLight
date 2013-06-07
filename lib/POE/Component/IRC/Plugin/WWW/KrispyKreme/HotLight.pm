@@ -2,10 +2,10 @@ package POE::Component::IRC::Plugin::WWW::KrispyKreme::HotLight;
 
 use 5.008_005;
 use Moose;
-use WWW::KrispyKreme::Hotlight;
+use WWW::KrispyKreme::HotLight;
 use IRC::Utils qw(parse_user);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use POE::Component::IRC::Plugin qw( :ALL );
 with 'POE::Component::IRC::Plugin::Role';
@@ -48,7 +48,7 @@ sub S_ping {
 sub _donuts {
     my ($self, $channel) = @_;
 
-    my $donuts = WWW::KrispyKreme::Hotlight->new(where => $self->geo)->locations;
+    my $donuts = WWW::KrispyKreme::HotLight->new(where => $self->geo)->locations;
     my $stores = join ', ', map $_->{title}, grep $_->{hotLightOn}, @$donuts;
     $self->irc->yield(    #
         privmsg => $channel =>
