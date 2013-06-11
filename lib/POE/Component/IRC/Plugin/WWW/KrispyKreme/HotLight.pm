@@ -5,7 +5,7 @@ use Moose;
 use WWW::KrispyKreme::HotLight;
 use IRC::Utils qw(parse_user);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use POE::Component::IRC::Plugin qw( :ALL );
 with 'POE::Component::IRC::Plugin::Role';
@@ -71,11 +71,75 @@ to announce when there are fresh donuts in the area!
 
   use POE::Component::IRC::Plugin::WWW::KrispyKreme::HotLight;
 
+  use strict;
+  use warnings;
+
+  use POE qw(
+    Component::IRC
+    Component::IRC::Plugin::WWW::KrispyKreme::HotLight
+  );
+
+  my $nick    = 'donut_bot';
+  my $ircname = 'the donut bot';
+  my $server  = 'irc.foobar';
+
+  my @channels = ('#coffee');
+
+  my $irc = POE::Component::IRC->spawn(
+      nick    => $nick,
+      ircname => $ircname,
+      server  => $server
+  ) or die "oops... $!";
+
+  POE::Session->create(
+      package_states => [main => [qw(_start irc_001)],],
+      heap           => {irc  => $irc},
+  );
+
+  $poe_kernel->run;
+
+  sub _start {
+      my $heap = $_[HEAP];
+
+      my $irc = $heap->{irc};
+      $irc->yield(register => 'all');
+
+      $irc->plugin_add(
+          Donuts => POE::Component::IRC::Plugin::WWW::KrispyKreme::HotLight->new(    #
+              geo => [34.101509, -118.32691]
+          )
+      );
+
+      $irc->yield(connect  => {});
+      return;
+  }
+
+  sub irc_001 {
+      $irc->yield(join => $_) for @channels;
+      return;
+  }
+
+=head1 CONSTRUCTOR
+
+  $irc->plugin_add(
+      Donuts => POE::Component::IRC::Plugin::WWW::KrispyKreme::HotLight->new(    #
+          geo => [34.101509, -118.32691]
+      )
+  );
+
+The geo attribute is REQUIRED.  See L<WWW::KrispyKreme::HotLight> for more info
+
 =head1 DESCRIPTION
 
 POE::Component::IRC::Plugin::WWW::KrispyKreme::HotLight is an IRC
 plugin that announces when there are fresh Krispy Kreme donuts near
 the given location
+
+=head1 SEE ALSO
+
+L<WWW::KrispyKreme::HotLight>
+
+L<POE::Component::IRC::Plugin>
 
 =head1 AUTHOR
 

@@ -31,6 +31,6 @@ resources:
   bugtracker: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight/issues
   homepage: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight
   repository: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight.git
-version: 0.03
+version: 0.04
 x_contributors:
   - 'Curtis Brandt <curtisjbrandt@gmail.com>'
