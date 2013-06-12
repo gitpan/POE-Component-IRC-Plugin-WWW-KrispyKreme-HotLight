@@ -1,5 +1,9 @@
 Revision history for POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight
 
+0.05  2013-06-12 16:46:34 PDT
+        - remove Moose and Role dependencies
+        - use Carp::POE
+
 0.04  2013-06-11 11:22:42 PDT
         - Add documentation
 

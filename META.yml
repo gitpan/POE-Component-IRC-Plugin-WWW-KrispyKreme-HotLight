@@ -22,15 +22,14 @@ no_index:
     - eg
     - examples
 requires:
-  Moose: 0
+  Carp::POE: 0.10
   POE::Component::IRC::Plugin: 0
-  POE::Component::IRC::Plugin::Role: 0
-  WWW::KrispyKreme::HotLight: 0.02
+  WWW::KrispyKreme::HotLight: 0.03
   perl: 5.008005
 resources:
   bugtracker: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight/issues
   homepage: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight
   repository: https://github.com/aggrolite/POE-Component-IRC-Plugin-WWW-KrispyKreme-HotLight.git
-version: 0.04
+version: 0.05
 x_contributors:
   - 'Curtis Brandt <curtisjbrandt@gmail.com>'

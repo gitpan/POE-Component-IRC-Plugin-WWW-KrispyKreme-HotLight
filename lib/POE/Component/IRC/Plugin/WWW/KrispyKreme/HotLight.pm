@@ -1,25 +1,36 @@
 package POE::Component::IRC::Plugin::WWW::KrispyKreme::HotLight;
 
 use 5.008_005;
-use Moose;
 use WWW::KrispyKreme::HotLight;
 use IRC::Utils qw(parse_user);
+use Carp::POE qw(croak);
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use POE::Component::IRC::Plugin qw( :ALL );
-with 'POE::Component::IRC::Plugin::Role';
-
-has geo => (is => 'rw', isa => 'ArrayRef[Num]');
 
 our @channels;
 
 sub new {
     my ($class, %args) = @_;
-    my $self = bless \%args, $class;
+    croak 'must supply geo as array ref i.e. ->new(geo => [35.045556,-85.267222])'
+      unless $args{geo}
+          and ref $args{geo}
+          and ref $args{geo} eq 'ARRAY';
+    $args{ping} = 0;
+    return bless \%args, $class;
+}
 
-    $self->{ping} = 0;
-    return $self;
+# list events we are interested in
+sub PCI_register {
+    my ($self, $irc) = splice @_, 0, 2;
+    $irc->plugin_register($self, 'SERVER', qw(join ping));
+    return 1;
+}
+
+# This is method is mandatory but we don't actually have anything to do.
+sub PCI_unregister {
+    return 1;
 }
 
 # trigger a donut search when:
@@ -48,7 +59,7 @@ sub S_ping {
 sub _donuts {
     my ($self, $channel) = @_;
 
-    my $donuts = WWW::KrispyKreme::HotLight->new(where => $self->geo)->locations;
+    my $donuts = WWW::KrispyKreme::HotLight->new(where => $self->{geo})->locations;
     my $stores = join ', ', map $_->{title}, grep $_->{hotLightOn}, @$donuts;
     $self->irc->yield(    #
         privmsg => $channel =>
