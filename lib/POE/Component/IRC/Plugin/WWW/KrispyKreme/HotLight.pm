@@ -5,7 +5,7 @@ use WWW::KrispyKreme::HotLight;
 use IRC::Utils qw(parse_user);
 use Carp::POE qw(croak);
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use POE::Component::IRC::Plugin qw( :ALL );
 
@@ -42,26 +42,26 @@ sub S_join {
     my $nick    = $irc->{nick};
     my $channel = ${$_[1]};
     push @channels, $channel;
-    return $joiner eq $nick ? $self->_donuts($channel) : PCI_EAT_NONE;
+    return $joiner eq $nick ? $self->_donuts($channel, $irc) : PCI_EAT_NONE;
 }
 
 sub S_ping {
-    my $self = shift;
+    my ($self, $irc) = splice @_, 0, 2;
     $self->{ping}++;
 
     # ping interval on freenode is ~2 mins
     my $ready = $self->{ping} % 20 == 0;
 
     return PCI_EAT_NONE unless @channels and $ready;
-    return $self->_donuts($_) for @channels;
+    return $self->_donuts($_, $irc) for @channels;
 }
 
 sub _donuts {
-    my ($self, $channel) = @_;
+    my ($self, $channel, $irc) = @_;
 
     my $donuts = WWW::KrispyKreme::HotLight->new(where => $self->{geo})->locations;
     my $stores = join ', ', map $_->{title}, grep $_->{hotLightOn}, @$donuts;
-    $self->irc->yield(    #
+    $irc->yield(    #
         privmsg => $channel =>
           "Fresh donuts available at the following Kripsy Kreme locations: $stores"
     ) if $stores;
